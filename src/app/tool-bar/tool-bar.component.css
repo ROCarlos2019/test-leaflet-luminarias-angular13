@@ -1,0 +1,12 @@
+.container{
+    position: absolute;
+    bottom: 0%;
+    right: 0%;
+    width: 27.5%;
+    height: 100%;
+    background-color: #FFF;
+    padding: 1rem;
+    color: #4F4F4F;
+    font-size: .875rem;
+    z-index: 1001;
+}

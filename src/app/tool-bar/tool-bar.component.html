@@ -1,0 +1,93 @@
+<div class="container" style="border: solid orange">
+  
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button [routerLink]="['/información-elemento']" routerLinkActive="router-link-active" class="nav-link active"
+                id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                aria-selected="true">Información</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button [routerLink]="['/análisis-grafico']" routerLinkActive="router-link-active" class="nav-link"
+                id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab"
+                aria-controls="profile" aria-selected="false">Grafico</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Información
+    
+            <div style="border: solid greenyellow; height: 50vh; overflow-y: auto;" *ngIf="datosRecibidos">
+                <button class="btn btn-primary" #myButton style="opacity: 0">Click Me</button>
+                <h6>Propiedades de la Luminaria Seleccionada: </h6>
+                <div> ID punto Luminaria en el geojson:
+                    <strong #sessionDuration> </strong>
+                </div>
+                <div class="d-flex">
+                    Id Luminaria:
+                    <span #sessionIDLuminaria> </span>
+                </div>
+                <div class="d-flex">
+                    Observaciones:
+                    <p #Observaciones> </p>
+                </div>
+                <div class="d-flex">
+                    Altura:
+                    <p #Altura> </p>
+                </div>
+                <div class="d-flex">
+                    Cantidad Lámparas:
+                    <p #CantidadLampara> </p>
+                </div>
+                <div class="d-flex">
+                    Distancia eje:
+                    <p #DistanciaEje> </p>
+                </div>
+                <div class="d-flex">
+                    Equipo Auxiliar:
+                    <p #EquipoAuxiliar> </p>
+                </div>
+                <div class="d-flex">
+                    Estado lámpara:
+                    <p #EstadoLampara> </p>
+                </div>
+                <div class="d-flex">
+                    Estado luminaria:
+                    <p #EstadoLuminaria> </p>
+                </div>
+                <div class="d-flex">
+                    Estado soporte:
+                    <p #EstadoSoporte> </p>
+                </div>
+                <div class="d-flex">
+                    Lado vía:
+                    <p #LadoVia> </p>
+                </div>
+                <div class="d-flex">
+                    Tipo soporte:
+                    <p #TipoSoporte> </p>
+                </div>
+                <div class="d-flex">
+                    Tipo Luminaria:
+                    <p #TipoLuminaria> </p>
+                </div>
+                <div class="d-flex">
+                    Tipo lampara:
+                    <p #TipoLampara> </p>
+                </div>
+            </div>
+    
+        </div>
+    
+    
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Visualizar Grafico
+    
+            <p>HOLAAAAA</p>
+    
+        </div>
+    </div>
+
+
+
+
+
+</div> 
