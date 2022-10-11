@@ -2,6 +2,7 @@ import { AfterContentChecked, AfterViewInit, Component, ElementRef, Input, NgZon
 import { DatosLuminaria } from '../model/luminarias.model';
 import { CompartidoService } from '../service/compartido.service';
 import * as Highcharts from 'highcharts';
+import { HighchartsService } from '../service/highcharts.service';
 @Component({
   selector: 'app-tool-bar',
   templateUrl: './tool-bar.component.html',
@@ -12,38 +13,15 @@ export class ToolBarComponent implements OnInit {
 
   @ViewChild('CantidadLuminarias') CantidadLuminarias!: ElementRef;
 
+  @ViewChild('charts') public chartEl: ElementRef;
+
   constructor(private renderer: Renderer2,
     private servicioCompartido: CompartidoService,
-    private ngZone: NgZone) {
+    private ngZone: NgZone, private hcs: HighchartsService) {
       
   }
 
   public datosRecibidos: DatosLuminaria = new DatosLuminaria;
-  public nuevoArrayGrafica: any[] = [];
-
-  // Grafica
-  Highcharts: typeof Highcharts = Highcharts;
-  chartOptions: Highcharts.Options = {
-
-    series: [{
-
-      data: [
-        ['tipo_soporte', 10],
-        ['tipo_luminaria', 26.8],
-        {
-          name: 'tipo_lampara',
-          y: 12.8,
-          sliced: true,
-          selected: true
-        }
-      ],
-      type: 'pie',
-    }],
-    title: {
-      text: 'Datos de la luminaria seleccionada'
-    }
-  };
-
 
   //get access to #sessionDuration element
   @ViewChild('sessionDuration') sessionDuration!: ElementRef;
@@ -79,10 +57,8 @@ export class ToolBarComponent implements OnInit {
 
       this.servicioCompartido.obtenerLuminaria.subscribe((data: DatosLuminaria) => {
         this.datosRecibidos = data;
-        this.nuevoArrayGrafica.push(this.datosRecibidos);
-        console.log('datos recibidos son: nuevoArrayGrafica ----> ', JSON.stringify(this.nuevoArrayGrafica.shift()));
 
-        this.renderer.setProperty(this.sessionDuration.nativeElement, 'innerHTML', data.id);
+        this.renderer.setProperty(this.sessionDuration?.nativeElement, 'innerHTML', data.id);
         // this.renderer.setProperty(this.Latitud.nativeElement, 'innerHTML', data.geometry.coordinates[0]);
         // this.renderer.setProperty(this.Longitud.nativeElement, 'innerHTML', data.geometry.coordinates[1]);
         this.renderer.setProperty(this.sessionIDLuminaria.nativeElement, 'innerHTML', data.properties.id_luminaria);
@@ -104,8 +80,14 @@ export class ToolBarComponent implements OnInit {
         this.myButton.nativeElement.click();
         this.renderer.selectRootElement(this.myButton.nativeElement).click();
 
+        this.createChart();
+
       });
     });
+  }
+
+  createChart() {
+    this.hcs.createChart(this.chartEl.nativeElement);
   }
 
 

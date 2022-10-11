@@ -5,6 +5,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HighchartsService } from './service/highcharts.service';
 import { ToolBarComponent } from './tool-bar/tool-bar.component';
 
 @NgModule({
@@ -18,7 +19,9 @@ import { ToolBarComponent } from './tool-bar/tool-bar.component';
     LeafletModule,
     HighchartsChartModule
   ],
-  providers: [],
+  providers: [
+    HighchartsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

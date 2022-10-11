@@ -151,7 +151,7 @@ export class AppComponent {
         // Una vez que sabemos cual es el indice del objeto seleccionado 'click' -> solo obtenemos el objeto del array original.
         const index = cordenadaExistente.index;
         this.objSeleccionado = this.luminarias.features[index];
-        console.log('objeto seleccionado a compartir es__: ', JSON.stringify(this.objSeleccionado));
+        // console.log('objeto seleccionado a compartir es__: ', JSON.stringify(this.objSeleccionado));
         sessionStorage.setItem("objetoSeleccionado", JSON.stringify(this.luminarias.features[index]));
         sessionStorage.setItem("arrayObjetosGEOJSON", JSON.stringify(this.luminarias.features.length));
         this.servicioCompartido.setDatosObjetoLuminaria(this.objSeleccionado);
