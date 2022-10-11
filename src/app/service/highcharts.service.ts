@@ -3,10 +3,9 @@ import { AfterContentChecked } from '@angular/core/core';
 import * as Highcharts from 'highcharts';
 
 @Injectable()
-export class HighchartsService implements AfterContentChecked {
+export class HighchartsService {
 
     private _objetoSeleccionado: any = sessionStorage.getItem('objetoSeleccionado');
-    // const robe: any = (sessionStorage.getItem('objetoSeleccionado'));
     public dataFinal = JSON.parse(this._objetoSeleccionado);
 
     constructor() { }
@@ -56,22 +55,17 @@ export class HighchartsService implements AfterContentChecked {
 
     createChart(container: any, options?: Object) {
 
-        this.DataGrafica();
-        console.log('-------- container ---> ', container);
+        // Volvemos actualizar la grafica con los nuevos datos recibidos
+        this.defaultOptions.series[0].data = this.data;
 
-        // this.renderer.setProperty(this.CantidadLuminarias.nativeElement, 'innerHTML', this._totalLuminarias);
+        this.DataGrafica();
 
         let opts = this.defaultOptions;
-        console.log('defaultOptions', opts)
+        // console.log('defaultOptions', opts);
         let e = document.createElement("div");
 
         container.appendChild(e);
-
-        if (opts.chart) {
-            // opts.chart['renderTo'] = e;
-        }
         Highcharts.chart(container, opts as any);
-  
     }
 
 
@@ -85,13 +79,6 @@ export class HighchartsService implements AfterContentChecked {
             ['numero_registro', this.dataFinal?.properties?.numero_registro],
             ['potencia', this.dataFinal?.properties?.potencia],
         ];
-        console.log(' ∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞∞DataGrafica()∞∞∞∞∞∞∞∞∞∞∞', this.data);
-    }
-
-    ngAfterContentChecked(): void {
-        this.DataGrafica();
-        console.log('data de la grafica sera ---> ngAfterViewInit:', this.data);
-
     }
 
 }
