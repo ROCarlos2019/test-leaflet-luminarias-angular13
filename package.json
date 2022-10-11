@@ -20,6 +20,8 @@
     "@angular/router": "~13.3.0",
     "@asymmetrik/ngx-leaflet": "^13.0.2",
     "bootstrap": "^5.2.2",
+    "highcharts": "^10.2.1",
+    "highcharts-angular": "^3.0.0",
     "leaflet": "^1.8.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
