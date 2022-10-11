@@ -2,7 +2,14 @@ import { Injectable } from '@angular/core';
 import { AfterContentChecked } from '@angular/core/core';
 import * as Highcharts from 'highcharts';
 
+/**
+ * Servicio creado para el llenado de la Grafica Pie Chart 
+ *
+ * @export
+ * @class HighchartsService
+ */
 @Injectable()
+
 export class HighchartsService {
 
     private _objetoSeleccionado: any = sessionStorage.getItem('objetoSeleccionado');
@@ -49,16 +56,23 @@ export class HighchartsService {
         series: [{
             name: 'Brands',
             colorByPoint: true,
-            data: this.data ? this.data : this.DataGrafica()
+            data: this.data ? this.data : this._DataGrafica()
         }]
     }
 
-    createChart(container: any, options?: Object) {
+    /**
+     * Metodo que dibuja la grafica.
+     *
+     * @param {*} container
+     * @param {Object} [options]
+     * @memberof HighchartsService
+     */
+    public createChart(container: any, options?: Object) {
 
-        // Volvemos actualizar la grafica con los nuevos datos recibidos
+        /* Volvemos actualizar la grafica con los nuevos datos recibidos */
         this.defaultOptions.series[0].data = this.data;
 
-        this.DataGrafica();
+        this._DataGrafica();
 
         let opts = this.defaultOptions;
         // console.log('defaultOptions', opts);
@@ -68,8 +82,15 @@ export class HighchartsService {
         Highcharts.chart(container, opts as any);
     }
 
-
-    public DataGrafica() {
+    /**
+     * Metodo privado para llenar el arreglo de la data para el pintado de la información.
+     *
+     * @private
+     * @memberof HighchartsService
+     */
+    private _DataGrafica() {
+        /* Volvemos actualizar la grafica con los nuevos datos recibidos */
+        this.defaultOptions.series[0].data = this.data;
         this._objetoSeleccionado = sessionStorage.getItem('objetoSeleccionado');
         this.dataFinal = JSON.parse(this._objetoSeleccionado);
 

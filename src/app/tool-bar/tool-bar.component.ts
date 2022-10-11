@@ -9,17 +9,24 @@ import { HighchartsService } from '../service/highcharts.service';
   styleUrls: ['./tool-bar.component.css']
 })
 export class ToolBarComponent implements OnInit {
+
   private _totalLuminarias: any = 1;
 
   @ViewChild('CantidadLuminarias') CantidadLuminarias!: ElementRef;
 
   @ViewChild('charts') public chartEl: ElementRef;
 
+  /**
+   * Creates an instance of ToolBarComponent.
+   * @param {Renderer2} renderer
+   * @param {CompartidoService} servicioCompartido
+   * @param {NgZone} ngZone
+   * @param {HighchartsService} hcs
+   * @memberof ToolBarComponent
+   */
   constructor(private renderer: Renderer2,
     private servicioCompartido: CompartidoService,
-    private ngZone: NgZone, private hcs: HighchartsService) {
-
-  }
+    private ngZone: NgZone, private hcs: HighchartsService) { }
 
   public datosRecibidos: DatosLuminaria = new DatosLuminaria;
 
@@ -47,14 +54,15 @@ export class ToolBarComponent implements OnInit {
 
   @Input('valueDataMapa') valueDataMapa: any;
 
+  /**
+   * Ciclo de Vida OnInit del Component se obtiene el objeto seleccionado de la luminaria.
+   * Se emplean ngZone para poder volver a renderizar la vista y pintar la información del objeto seleccionado.
+   *
+   * @memberof ToolBarComponent
+   */
   ngOnInit(): void {
-
-
-
     this.ngZone.runOutsideAngular(() => {
       this._totalLuminarias = sessionStorage.getItem('arrayObjetosGEOJSON');
-      console.log('_totalLuminarias ----> :)', this._totalLuminarias);
-
       this.servicioCompartido.obtenerLuminaria.subscribe((data: DatosLuminaria) => {
         if (data) {
           this.datosRecibidos = data;
@@ -74,12 +82,9 @@ export class ToolBarComponent implements OnInit {
           this.renderer.setProperty(this.TipoSoporte.nativeElement, 'innerHTML', this.datosRecibidos.properties.tipo_soporte);
           this.renderer.setProperty(this.TipoLuminaria.nativeElement, 'innerHTML', this.datosRecibidos.properties.tipo_luminaria);
           this.renderer.setProperty(this.TipoLampara.nativeElement, 'innerHTML', this.datosRecibidos.properties.tipo_lampara);
-
           this.renderer.setProperty(this.CantidadLuminarias.nativeElement, 'innerHTML', this._totalLuminarias);
-
           this.myButton.nativeElement.click();
           this.renderer.selectRootElement(this.myButton.nativeElement).click();
-
           this.createChart();
         }
 
@@ -87,6 +92,12 @@ export class ToolBarComponent implements OnInit {
     });
   }
 
+
+  /**
+   * Metodo para realizar la creacion de la grafica através del servicio.
+   *
+   * @memberof ToolBarComponent
+   */
   createChart() {
     this.hcs.createChart(this.chartEl.nativeElement);
   }

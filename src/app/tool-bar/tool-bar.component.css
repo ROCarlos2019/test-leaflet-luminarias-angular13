@@ -16,6 +16,8 @@
     .container {
         position: inherit;
         width: 100%;
+        overflow: auto;
+        height: 45%;
     }
 
 }

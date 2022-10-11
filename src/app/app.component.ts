@@ -31,7 +31,14 @@ export class AppComponent {
     [37.70590845000001, -3.98959274]
   ]);
 
+  /**
+   * Creates an instance of AppComponent.
+   * @param {CompartidoService} servicioCompartido
+   * @param {Renderer2} renderer
+   * @memberof AppComponent
+   */
   public constructor(private servicioCompartido: CompartidoService, private renderer: Renderer2) {
+
 
     this.baseLayer = tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       crossOrigin: 'anonymous',
@@ -43,12 +50,24 @@ export class AppComponent {
 
   }
 
+  /**
+   * Metodo disparado desde el Mapa leaflet.
+   *
+   * @param {Map} map
+   * @memberof AppComponent
+   */
   public onMapReady(map: Map): void {
     this.map = map;
     this.addLuminairesLayer();
   }
 
-
+  /**
+   * Metodo asincrono donde se realiza la construcción de los puntos del geojson para las luminarias.
+   *
+   * @private
+   * @return {*}  {Promise<void>}
+   * @memberof AppComponent
+   */
   private async addLuminairesLayer(): Promise<void> {
     this.luminarias = await (await fetch('assets/data/luminarias.geojson')).json();
 
@@ -124,13 +143,16 @@ export class AppComponent {
         },
       }).addTo(this.map);
 
-      // Logica para Seleccionar el Objeto del punto seleccionado
+      // Logica para Seleccionar el Objeto del punto seleccionado dentro del mapa.
       var BreakException = {};
       var lat = '';
       var lng = '';
       var cordenadaExistente: any;
 
       try {
+        /** Se recorre el array de todas las coordenadas para realizar la igualacion de las coordenada seleccionada con la del array
+         * Para poder obtener su indice y posteriormente todo el objeto de la Luminaria seleccionada.
+         */
         arrayCoordenadas.forEach(function (el, index) {
           lat = el.cordenadas.lat.toString().substr(0, 7);
           lng = el.cordenadas.lng.toString().substr(0, 7);
@@ -147,22 +169,15 @@ export class AppComponent {
           }
         });
       } catch (e) {
-
         // Una vez que sabemos cual es el indice del objeto seleccionado 'click' -> solo obtenemos el objeto del array original.
         const index = cordenadaExistente.index;
         this.objSeleccionado = this.luminarias.features[index];
-        // console.log('objeto seleccionado a compartir es__: ', JSON.stringify(this.objSeleccionado));
         sessionStorage.setItem("objetoSeleccionado", JSON.stringify(this.luminarias.features[index]));
         sessionStorage.setItem("arrayObjetosGEOJSON", JSON.stringify(this.luminarias.features.length));
         this.servicioCompartido.setDatosObjetoLuminaria(this.objSeleccionado);
-
         this.map.zoomIn(1);
 
       }
-
-
-      // console.log('cordenadaSeleccionada es --> ', coordenadasSeleccionada);
-      // console.log(' array de puras coordenadas de todos los objetos: ', arrayCoordenadas);
     });
 
   }
