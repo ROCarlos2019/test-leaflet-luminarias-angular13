@@ -1,4 +1,4 @@
-.container{
+.container {
     position: absolute;
     bottom: 0%;
     right: 0%;
@@ -9,4 +9,19 @@
     color: #4F4F4F;
     font-size: .875rem;
     z-index: 1001;
+}
+
+/* contempla xs y sm */
+@media only screen and (max-width: 767px) {
+    .container {
+        position: inherit;
+        width: 100%;
+    }
+
+}
+
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+    .container {
+        width: 33%;
+    }
 }

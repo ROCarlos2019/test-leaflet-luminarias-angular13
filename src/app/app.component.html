@@ -1,10 +1,9 @@
-<div class="map-container"
-    leaflet
-    [leafletOptions]="mapOptions"
-    [leafletLayer]="baseLayer"
-    [leafletFitBounds]="mapFitBounds"
-    (leafletMapReady)="onMapReady($event)"
-    >
-></div>
+<div class="col-12 col-md-8 col-lg-9 alturaMapa">
 
-<app-tool-bar></app-tool-bar>
+    <div class="map-container" leaflet [leafletOptions]="mapOptions"
+        [leafletLayer]="baseLayer" [leafletFitBounds]="mapFitBounds" (leafletMapReady)="onMapReady($event)">
+    </div>
+
+    <app-tool-bar></app-tool-bar>
+
+</div>
