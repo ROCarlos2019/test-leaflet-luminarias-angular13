@@ -125,8 +125,8 @@ export class AppComponent {
       // INTENTANDO CAMBIAR EL COLOR DE LA LAMPARA SELECCIONADA
       var geojsonMarkerOptions = {
         radius: 8,
-        fillColor: "red",
-        color: "#000",
+        fillColor: "#FF6100",
+        color: "#FFC100", // Borde
         weight: 1,
         opacity: 1,
         fillOpacity: 0.8
@@ -141,13 +141,14 @@ export class AppComponent {
           // mandamos el punto seleccionado para cambiar sus propiedades (radius, color, fillColor, etc.)
           return L.circleMarker(coordenadasSeleccionada, geojsonMarkerOptions);
         },
-      }).addTo(this.map);
+      })//.addTo(this.map);
 
       // Logica para Seleccionar el Objeto del punto seleccionado dentro del mapa.
       var BreakException = {};
       var lat = '';
       var lng = '';
       var cordenadaExistente: any;
+      var prenderLuminaria: boolean = false;
 
       try {
         /** Se recorre el array de todas las coordenadas para realizar la igualacion de las coordenada seleccionada con la del array
@@ -161,6 +162,7 @@ export class AppComponent {
           const lngSelected = coordenadasSeleccionada.lng.toString().substring(0, 7);
 
           if (lat == latSelected && lng == lngSelected) {
+            prenderLuminaria = true;
             cordenadaExistente = {
               "index": index,
               "cordenadas": coordenadasSeleccionada
@@ -178,6 +180,20 @@ export class AppComponent {
         this.map.zoomIn(1);
 
       }
+
+
+      if(prenderLuminaria) {
+        L.geoJSON(this.luminarias, {
+          pointToLayer: function (feature, latlng) {
+            arrayCoordenadas.push({ id: contador, cordenadas: latlng });
+            contador++;
+            // mandamos el punto seleccionado para cambiar sus propiedades (radius, color, fillColor, etc.)
+            return L.circleMarker(coordenadasSeleccionada, geojsonMarkerOptions);
+          },
+        }).addTo(this.map);
+      }
+
+
     });
 
   }

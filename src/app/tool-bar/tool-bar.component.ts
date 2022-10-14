@@ -60,7 +60,7 @@ export class ToolBarComponent implements OnInit {
     this.ngZone.runOutsideAngular(() => {
       this._totalLuminarias = sessionStorage.getItem('arrayObjetosGEOJSON');
       this.servicioCompartido.obtenerLuminaria.subscribe((data: DatosLuminaria) => {
-        if (data && this.datosRecibidos.properties) {
+        if (data) {
           this.datosRecibidos = data;
           this.renderer.setProperty(this.sessionDuration.nativeElement, 'innerHTML', data.id);
           // this.renderer.setProperty(this.Latitud.nativeElement, 'innerHTML', data.geometry.coordinates[0]);
