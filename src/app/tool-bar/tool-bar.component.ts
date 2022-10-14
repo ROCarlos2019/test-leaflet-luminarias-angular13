@@ -48,10 +48,6 @@ export class ToolBarComponent implements OnInit {
   @ViewChild('TipoLuminaria') TipoLuminaria!: ElementRef;
   @ViewChild('TipoLampara') TipoLampara!: ElementRef;
 
-
-  @ViewChild("myButton")
-  myButton!: ElementRef;
-
   @Input('valueDataMapa') valueDataMapa: any;
 
   /**
@@ -64,7 +60,7 @@ export class ToolBarComponent implements OnInit {
     this.ngZone.runOutsideAngular(() => {
       this._totalLuminarias = sessionStorage.getItem('arrayObjetosGEOJSON');
       this.servicioCompartido.obtenerLuminaria.subscribe((data: DatosLuminaria) => {
-        if (data) {
+        if (data && this.datosRecibidos.properties) {
           this.datosRecibidos = data;
           this.renderer.setProperty(this.sessionDuration.nativeElement, 'innerHTML', data.id);
           // this.renderer.setProperty(this.Latitud.nativeElement, 'innerHTML', data.geometry.coordinates[0]);
@@ -83,15 +79,12 @@ export class ToolBarComponent implements OnInit {
           this.renderer.setProperty(this.TipoLuminaria.nativeElement, 'innerHTML', this.datosRecibidos.properties.tipo_luminaria);
           this.renderer.setProperty(this.TipoLampara.nativeElement, 'innerHTML', this.datosRecibidos.properties.tipo_lampara);
           this.renderer.setProperty(this.CantidadLuminarias.nativeElement, 'innerHTML', this._totalLuminarias);
-          this.myButton.nativeElement.click();
-          this.renderer.selectRootElement(this.myButton.nativeElement).click();
           this.createChart();
         }
 
       });
     });
   }
-
 
   /**
    * Metodo para realizar la creacion de la grafica através del servicio.
