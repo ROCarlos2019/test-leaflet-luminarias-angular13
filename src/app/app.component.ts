@@ -182,6 +182,9 @@ export class AppComponent {
       }
 
 
+      /** Solo se prendera cuando el clic del punto seleccionado en el mapa sea igual alguna coordenada de nuestro arreglo del geoJSON
+       *  & Cuando no  se seleccione un punto solo se pondra el marcado de ubicación en el Mapa.
+       */
       if(prenderLuminaria) {
         L.geoJSON(this.luminarias, {
           pointToLayer: function (feature, latlng) {
