@@ -20,7 +20,7 @@ export class AppComponent {
   public mapOptions: MapOptions = {
     zoom: 12,
     zoomControl: false,
-    center: [37.590227, -4.082193],
+    center: [37.580227, -4.062193],
     preferCanvas: false
   };
 
